@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dynamic Parking Pricing System</title>
-</head>
-<body>
-
 <h1>🚗 Dynamic Parking Pricing with Real-Time Visualization</h1>
 
 <p>
@@ -111,6 +104,3 @@ FinalPrice = BasePrice * VehicleWeight * (1 + SeasonalityBoost)
 <h2>📝 <u>Contact</u></h2>
 
 <p>For questions or collaboration, please reach out via GitHub issues or email.</p>
-
-</body>
-</html>
