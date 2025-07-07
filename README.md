@@ -30,41 +30,52 @@ The project uses streaming data from multiple parking lots to compute smart, ada
 
 <hr>
 
-<h2>📦 <u>Project Architecture</u></h2>
-
-<p>The system simulates real-time parking data, applies different pricing models, and streams visual dashboards:</p>
-
 ## 🏗️ Project Architecture
 
 ```mermaid
+
 flowchart LR
     A[Parking Lot Data] -->|Stream CSV| B[Pathway Streaming Engine]
     B -->|Compute Prices| C[Bokeh Visualizations]
     C --> D[Panel Dashboard]
+
 ```
 
 <hr>
 
-<h2>📐 <u>Pricing Models Implemented</u></h2>
-
-<h3>Model 1: Baseline Linear Pricing</h3>
+<h2>⚙️ Detailed Architecture & Workflow</h2>
 <ul>
-    <li>Price increases linearly with occupancy levels.</li>
-    <li>Formula: <code>Price = 10 + α * (MaxOccupancy - MinOccupancy) / Capacity</code></li>
+<li><strong>Parking Lot Data:</strong> Historical and simulated real-time data from 14 parking spaces. Includes occupancy, capacity, queue length, traffic conditions, vehicle type, and special event indicators.</li>
+<li><strong>Pathway Streaming Engine:</strong> Streams CSV data at configurable rates. Applies window-based aggregation (daily tumbling windows). Computes demand, pricing, and seasonality effects.</li>
+<li><strong>Pricing Logic:</strong> Multiple models compute prices dynamically (see below). Results streamed to visual dashboards.</li>
+<li><strong>Bokeh Visualizations:</strong> Generates interactive time-series plots of parking prices. Separate plots for each vehicle type.</li>
+<li><strong>Panel Dashboard:</strong> Combines all Bokeh plots into responsive web dashboards. Allows monitoring price behavior per parking lot and vehicle category.</li>
 </ul>
 
-<h3>Model 2: Demand-Based Pricing with Seasonality</h3>
-<ul>
-    <li>Demand function includes occupancy, queue length, traffic, special events, vehicle type.</li>
-    <li>Smoothed seasonality introduced using a sine wave based on weekday.</li>
-    <li>Vehicle-specific price multipliers applied for cars, bikes, trucks, etc.</li>
-    <li>Final Formula:</li>
-</ul>
+<hr>
 
+<h2>💵 Pricing Models Implemented</h2>
+
+<h3>✅ Model 1: Baseline Linear Pricing</h3>
+<p>Price increases linearly with occupancy levels.</p>
+<pre>
+Price = 10 + α * (MaxOccupancy - MinOccupancy) / Capacity
+</pre>
+
+<h3>✅ Model 2: Demand-Based Pricing with Seasonality</h3>
+<p>Demand function incorporates:</p>
+<ul>
+<li>Occupancy</li>
+<li>Queue length</li>
+<li>Traffic conditions</li>
+<li>Special events</li>
+<li>Vehicle type</li>
+</ul>
+<p>Smooth weekly seasonality via sine wave on weekday. Vehicle-specific price multipliers for cars, bikes, trucks.</p>
 <pre>
 NormalizedDemand = α·(Occupancy/Capacity) + β·QueueLength - γ·Traffic + δ·SpecialDay
 
-SeasonalityBoost = 0.1 * sin( (Weekday/6) * 2π )
+SeasonalityBoost = 0.1 * sin( (Weekday / 6) * 2π )
 
 BasePrice = 10 * (1 + λ * NormalizedDemand)
 
@@ -72,6 +83,28 @@ FinalPrice = BasePrice * VehicleWeight * (1 + SeasonalityBoost)
 </pre>
 
 <hr>
+
+## 🧉 Pricing Model Flow Diagram
+
+```mermaid
+
+graph TD
+    A[Parking Lot Data Stream] --> B[Pathway Window Aggregation]
+    B --> C[Model 1: Linear Pricing]
+    B --> D[Model 2: Demand-Based Pricing with Seasonality]
+
+    C --> E[Base Price Computation]
+    D --> F[Demand Calculation]
+    F --> G[Seasonality Boost (Sine Wave)]
+    G --> H[Final Price with Vehicle Multiplier]
+
+    E --> I[Bokeh Visualizations]
+    H --> I[Bokeh Visualizations]
+    I --> J[Panel Dashboard]
+
+```
+
+
 
 <h2>📈 <u>Visualization Features</u></h2>
 
