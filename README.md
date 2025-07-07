@@ -34,12 +34,14 @@ The project uses streaming data from multiple parking lots to compute smart, ada
 
 <p>The system simulates real-time parking data, applies different pricing models, and streams visual dashboards:</p>
 
-<pre>
-┌─────────────┐   Stream CSV per Lot   ┌─────────────┐   Compute Prices   ┌──────────────┐
-│  Parking    │  ───────────────────▶  │ Pathway     │  ───────────────▶  │ Bokeh Plots  │
-│  Lot Data   │                        │ Streaming   │                   │ + Panel UI   │
-└─────────────┘                        └─────────────┘                   └──────────────┘
-</pre>
+## 🏗️ Project Architecture
+
+```mermaid
+flowchart LR
+    A[Parking Lot Data] -->|Stream CSV| B[Pathway Streaming Engine]
+    B -->|Compute Prices| C[Bokeh Visualizations]
+    C --> D[Panel Dashboard]
+```
 
 <hr>
 
