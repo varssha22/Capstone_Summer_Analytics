@@ -93,7 +93,7 @@ graph TD
 
     C --> E[Base Price Computation]
     D --> F[Demand Calculation]
-    F --> G[Seasonality Boost \\(Sine Wave\\)]
+    F --> G[Seasonality Boost using Sine Wave]
     G --> H[Final Price with Vehicle Multiplier]
 
     E --> I[Bokeh Visualizations]
