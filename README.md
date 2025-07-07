@@ -85,7 +85,7 @@ FinalPrice = BasePrice * VehicleWeight * (1 + SeasonalityBoost)
 <hr>
 
 ## 🧉 Pricing Model Flow Diagram
-
+```mermaid
 graph TD
     A[Parking Lot Data Stream] --> B[Pathway Window Aggregation]
     B --> C[Model 1: Linear Pricing]
@@ -93,13 +93,13 @@ graph TD
 
     C --> E[Base Price Computation]
     D --> F[Demand Calculation]
-    F --> G[Seasonality Boost (Sine Wave)]
+    F --> G[Seasonality Boost \\(Sine Wave\\)]
     G --> H[Final Price with Vehicle Multiplier]
 
     E --> I[Bokeh Visualizations]
     H --> I[Bokeh Visualizations]
     I --> J[Panel Dashboard]
-
+```
 
 
 <h2>📈 <u>Visualization Features</u></h2>
