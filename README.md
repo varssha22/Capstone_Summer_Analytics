@@ -71,11 +71,12 @@ Price = 10 + α * (MaxOccupancy - MinOccupancy) / Capacity
 <li>Special events</li>
 <li>Vehicle type</li>
 </ul>
-<p>Smooth weekly seasonality via sine wave on weekday. Vehicle-specific price multipliers for cars, bikes, trucks.</p>
+<p>Simple seasonality boost applied on weekends (Saturday/Sunday).</p>
+<p>Vehicle-specific price multipliers for cars, bikes, trucks.</p>
 <pre>
 NormalizedDemand = α·(Occupancy/Capacity) + β·QueueLength - γ·Traffic + δ·SpecialDay
 
-SeasonalityBoost = 0.1 * sin( (Weekday / 6) * 2π )
+SeasonalityBoost = 1.2 if Weekday in [0, 6] else 1.0
 
 BasePrice = 10 * (1 + λ * NormalizedDemand)
 
@@ -93,7 +94,7 @@ graph TD
 
     C --> E[Base Price Computation]
     D --> F[Demand Calculation]
-    F --> G[Seasonality Boost using Sine Wave]
+    F --> G[Seasonality Boost using Weekend]
     G --> H[Final Price with Vehicle Multiplier]
 
     E --> I[Bokeh Visualizations]
