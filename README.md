@@ -30,14 +30,15 @@ The project uses streaming data from multiple parking lots to compute smart, ada
 
 <hr>
 
-## 🏗️ Project Architecture
+## 🏗️ Project Structure
 
-```mermaid
+```
 
-flowchart LR
-    A[Parking Lot Data] -->|Stream CSV| B[Pathway Streaming Engine]
-    B -->|Compute Prices| C[Bokeh Visualizations]
-    C --> D[Panel Dashboard]
+├── model_1_plots/                 
+├── model_2_plots/     
+├── Parking_Lot_project.ipynb
+├── README.md
+├── dataset.csv
 
 ```
 
